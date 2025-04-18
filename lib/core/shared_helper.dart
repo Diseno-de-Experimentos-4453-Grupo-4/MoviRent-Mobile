@@ -1,16 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedHelper{
-
-
-  Future<void> setString(String item) async{
+  Future<void> setToken(String item) async{
     final instance =  await SharedPreferences.getInstance();
-    instance.setString(item, item);
+    await instance.setString("token", item);
   }
 
-  Future<String> getString(String item) async{
+  Future<String?> getToken() async{
     final instance =  await SharedPreferences.getInstance();
-    final value = instance.getString(item);
-    return value!;
+    return instance.getString("token");
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:movirent/core/shared_helper.dart';
 
 import 'constants.dart';
@@ -12,9 +13,13 @@ abstract class DioHelper<TResponse,TRequest> {
    DioHelper(this.resourcePath, this.fromJson, this.toJson){
      dio.interceptors.add(InterceptorsWrapper(
        onRequest: (options, handler) async{
-         final token = await SharedHelper().getString("token");
-         if (token != null) {
-           options.headers['Authorization'] = 'Bearer $token';
+         try{
+           final token = await SharedHelper().getToken();
+           if (token != null && token.isNotEmpty) {
+             options.headers['Authorization'] = 'Bearer $token';
+           }
+         } catch (e){
+           debugPrint("Cannot get token: $e");
          }
          return handler.next(options);
        }

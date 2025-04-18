@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "51590455332",
+    "project_id": "movirent-af794",
+    "storage_bucket": "movirent-af794.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51590455332:android:3bb13ef9b176257a9f78b1",
+        "android_client_info": {
+          "package_name": "com.example.movirent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhT_-doOVAj081lQqjZWgC2Zj4yXTxkOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
