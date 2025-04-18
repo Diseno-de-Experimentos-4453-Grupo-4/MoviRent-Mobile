@@ -74,6 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     final request = SignInDTO(emailController.text, passwordController.text);
                     final token = await fireAuthService.signIn(request);
                     await SharedHelper().setToken(token!);
+                    await SharedHelper().setEmail(emailController.text);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
                   } catch (e){
                     throw Exception("An error has ocurred in sign in process $e");

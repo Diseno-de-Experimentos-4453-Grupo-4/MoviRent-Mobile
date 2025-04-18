@@ -23,8 +23,8 @@ class ProfileDTO {
         this.district});
 
   ProfileDTO.fromJson(Map<String, dynamic> json) {
-    firstName = json['firstName'];
-    lastName = json['lastName'];
+    firstName = json['name']['firstName'];
+    lastName = json['name']['lastName'];
     email = json['email'];
     dni = json['dni'];
     age = json['age'];
