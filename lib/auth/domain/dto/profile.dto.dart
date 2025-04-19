@@ -29,10 +29,10 @@ class ProfileDTO {
     dni = json['dni'];
     age = json['age'];
     phone = json['phone'];
-    street = json['street'];
-    neighborhood = json['neighborhood'];
-    city = json['city'];
-    district = json['district'];
+    street = json['fullAddress'].toString().split(", ")[0];
+    neighborhood = json['fullAddress'].toString().split(", ")[1];
+    city = json['fullAddress'].toString().split(", ")[2];
+    district = json['fullAddress'].toString().split(", ")[3];
   }
 
 }
