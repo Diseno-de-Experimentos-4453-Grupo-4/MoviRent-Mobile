@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
+import 'package:movirent/shared/presentation/widgets/custom_drawer.dart';
+import 'package:movirent/shared/presentation/widgets/custom_navigation_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../../../auth/domain/service/profile.service.dart';
@@ -38,19 +41,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final profileProvider = context.watch<ProfileProvider>();
     return Scaffold(
+      bottomNavigationBar: CustomNavigationBar(),
       appBar: AppBar(
-        foregroundColor: background,
+        foregroundColor: secondary,
         backgroundColor: primary,
         title: Text(
-            "Bienvenido! ${profileProvider.profile.email}",
+            "Bienvenido! ${profileProvider.profile.firstName}",
           style: TextStyle(
-            fontSize: textMid
+            fontSize: textMid,
+            fontWeight: FontWeight.bold
           ),
         ) ,
       ),
-      endDrawer: Container(
+      drawer: CustomDrawer(name: profileProvider.profile.firstName!),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: AppTextField(
+              hintText: "Ingrese dirección",
+                labelColor: secondary
+            ),
+          )
+        ],
       ),
-      body: Column(),
     );
   }
 }

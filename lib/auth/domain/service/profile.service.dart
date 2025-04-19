@@ -15,6 +15,7 @@ class ProfileService extends DioHelper<ProfileDTO, SignUpDTO> {
   Future<ProfileDTO> getProfileByEmail(String email) async {
     final response = await dio.get("${Constant.dev.environment}$resourcePath/$email");
     final profileJson = response.data;
+    print(profileJson);
     return ProfileDTO.fromJson(profileJson);
   }
 
