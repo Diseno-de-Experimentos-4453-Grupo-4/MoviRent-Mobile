@@ -1,10 +1,61 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
+import 'package:movirent/scooters/presentation/screens/search_scooter_screen.dart';
+import 'package:movirent/shared/presentation/screens/home_screen.dart';
+import 'package:movirent/ui/styles/ui_styles.dart';
 
 class ScooterCard extends StatelessWidget {
-  const ScooterCard({super.key});
+  final bool isPromotion;
+  final ScooterResponseDTO scooter;
+  const ScooterCard({
+    super.key,
+    this.isPromotion = true,
+    required this.scooter
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: 250,
+      child: GestureDetector(
+        onTap: (){
+          !isPromotion ? Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen())) :  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterScreen()));
+        },
+        child: Card(
+          elevation: 10.0,
+          color: background,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                  scooter.image!,
+                width: double.infinity,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(scooter.model!),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    " S/. ${scooter.price}",
+                  style: TextStyle(
+                    fontSize: textMid,
+                    color: secondary,
+                    fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(scooter.brand!),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

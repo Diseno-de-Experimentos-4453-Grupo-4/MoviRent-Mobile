@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
+import 'package:movirent/scooters/presentation/screens/search_scooter_screen.dart';
+import 'package:movirent/scooters/presentation/widgets/scooter_card.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:movirent/shared/presentation/widgets/custom_drawer.dart';
 import 'package:movirent/shared/presentation/widgets/custom_navigation_bar.dart';
@@ -19,6 +22,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final profileService = ProfileService();
+  final scooter1 = ScooterResponseDTO(
+      image: "https://i.ebayimg.com/images/g/z5UAAOSwCyFmJYMe/s-l1600.webp",
+    brand: "USGOODEAL-COM",
+    model: "Scooter eléctrico de alta resistencia 500 W 28 MPH E-Scooter sentado sistema NFC rango 28 m-",
+    price: 500
+  );
+
+  final scooter2 = ScooterResponseDTO(
+      image: "https://i.ibb.co/LnNVm5W/MTMad1600-Blue-3.jpg",
+      brand: "Electric Scooter Motor On Bicycle",
+      model: "Scooter eléctrico de alta resistencia 500 W 28 MPH E-Scooter sentado sistema NFC rango 28 m-",
+      price: 200
+  );
   @override
   void initState() {
     super.initState();
@@ -54,16 +70,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ) ,
       ),
       drawer: CustomDrawer(name: profileProvider.profile.firstName!),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: AppTextField(
-              hintText: "Ingrese dirección",
-                labelColor: secondary
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterScreen()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                  child: AppTextField(
+                    hintText: "Empieza a buscar tu scooter ideal",
+                      labelColor: secondary
+                  ),
+              ),
             ),
-          )
-        ],
+            ScooterCard(scooter: scooter1),
+            ScooterCard(scooter: scooter2)
+          ],
+        ),
       ),
     );
   }
