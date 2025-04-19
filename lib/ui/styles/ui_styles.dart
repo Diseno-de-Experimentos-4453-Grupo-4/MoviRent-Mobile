@@ -12,5 +12,16 @@ const double textLarge = 40.5;
 const double textMid = 20.5;
 const double textSmall = 10.5;
 
+const TextStyle textStyleNormal = TextStyle(
+  fontSize: textMid,
+  color: secondary,
+);
+
+const TextStyle textStyleBold = TextStyle(
+  fontSize: textMid,
+  fontWeight: FontWeight.bold,
+  color: secondary,
+);
+
 
 

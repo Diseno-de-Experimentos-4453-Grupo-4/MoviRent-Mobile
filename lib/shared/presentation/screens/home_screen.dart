@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ) ,
       ),
-      drawer: CustomDrawer(name: profileProvider.profile.firstName!),
+      drawer: CustomDrawer(name: profileProvider.profile.firstName ?? "Usuario", profile: profileProvider.profile!,),
       body: SingleChildScrollView(
         child: Column(
           children: [

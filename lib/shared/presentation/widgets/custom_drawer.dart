@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movirent/shared/presentation/screens/profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 
 class CustomDrawer extends StatelessWidget {
   final String name;
-  const CustomDrawer({super.key, required this.name});
+  final dynamic profile;
+
+  const CustomDrawer({super.key, required this.name, required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -13,45 +16,50 @@ class CustomDrawer extends StatelessWidget {
       height: double.infinity,
       width: 200,
       child: Column(
-
         children: [
-          const SizedBox(height: 100),
-          CircleAvatar(
-            child: Icon(Icons.person),
+          SizedBox(height: 100),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => ProfileScreen(profile: profile),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              child: Icon(Icons.person),
+            ),
           ),
-          Text(name),
-          const SizedBox(height: 20),
-          IconButton(
-              onPressed: (){
-
-              },
-              icon: Icon(Icons.bike_scooter)
+          SizedBox(height: 10),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          Text("Mis scooters"),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           IconButton(
-              onPressed: (){
-
-              },
-              icon: Icon(Icons.calendar_month)
+            onPressed: () {},
+            icon: Icon(Icons.bike_scooter),
+          ),
+         Text("Mis scooters"),
+          SizedBox(height: 20),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.calendar_month),
           ),
           Text("Mis reservas"),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           IconButton(
-              onPressed: (){
-
-              },
-              icon: Icon(Icons.report)
+            onPressed: () {},
+            icon: Icon(Icons.report),
           ),
           Text("Mis reportes"),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           IconButton(
-              onPressed: (){
-
-              },
-              icon: Icon(Icons.report)
+            onPressed: () {},
+            icon: const Icon(Icons.report),
           ),
-          Text("Mis reseñas")
+          Text("Mis reseñas"),
         ],
       ),
     );
