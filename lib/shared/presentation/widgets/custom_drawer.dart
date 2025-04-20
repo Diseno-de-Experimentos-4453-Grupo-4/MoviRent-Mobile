@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movirent/scooters/presentation/screens/my_scooters_screen.dart';
 import 'package:movirent/shared/presentation/screens/profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 
@@ -38,13 +39,16 @@ class CustomDrawer extends StatelessWidget {
           ),
           SizedBox(height: 20),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => MyScootersScreen()));
+            },
             icon: Icon(Icons.bike_scooter),
           ),
          Text("Mis scooters"),
           SizedBox(height: 20),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+            },
             icon: Icon(Icons.calendar_month),
           ),
           Text("Mis reservas"),

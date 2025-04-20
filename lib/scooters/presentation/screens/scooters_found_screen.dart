@@ -6,7 +6,7 @@ import 'package:movirent/scooters/presentation/widgets/scooter_card.dart';
 import '../../../ui/styles/ui_styles.dart';
 import '../../domain/dto/scooter_response.dto.dart';
 
-class ScootersFoundScreen extends StatelessWidget {
+class ScootersFoundScreen extends StatelessWidget  {
   final String? district;
   final String? address;
   const ScootersFoundScreen({super.key, this.address, this.district});

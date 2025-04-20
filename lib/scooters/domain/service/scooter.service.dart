@@ -35,6 +35,14 @@ class ScooterService extends DioHelper<ScooterResponseDTO, ScooterRequestDTO>{
     return [];
   }
 
+  Future<List<ScooterResponseDTO>> getScootersByProfileId(int profileId) async{
+    final response = await dio.get("${Constant.dev.environment}$resourcePath/profile?profileId=$profileId");
+    if (response.statusCode == HttpStatus.ok){
+      return (response.data as List).map((scooter) => ScooterResponseDTO.fromJson(scooter)).toList();
+    }
+    return [];
+  }
+
 
 
 }
