@@ -14,17 +14,23 @@ class ScooterService extends DioHelper<ScooterResponseDTO, ScooterRequestDTO>{
           (data) => data.toJson()
   );
 
-  Future<ScooterResponseDTO> getScooterByAddress(String address) async{
+  Future<List<ScooterResponseDTO>> getScooterByAddress(String address) async {
     final response = await dio.get("${Constant.dev.environment}$resourcePath/address/$address");
-    final scooterJson = response.data;
-    return ScooterResponseDTO.fromJson(scooterJson);
+
+    if (response.statusCode == HttpStatus.ok) {
+      final result = response.data;
+      print(result);
+      return [ScooterResponseDTO.fromJson(result)];
+    }
+
+    return [];
   }
+
 
   Future<List<ScooterResponseDTO>> getScootersDistrict(String district) async{
     final response = await dio.get("${Constant.dev.environment}$resourcePath/district?district=$district");
     if (response.statusCode == HttpStatus.ok){
-      final result = response.data;
-      return result.map((scooter) => ScooterResponseDTO.fromJson(scooter)) as List<ScooterResponseDTO>;
+      return (response.data as List).map((scooter) => ScooterResponseDTO.fromJson(scooter)).toList();
     }
     return [];
   }

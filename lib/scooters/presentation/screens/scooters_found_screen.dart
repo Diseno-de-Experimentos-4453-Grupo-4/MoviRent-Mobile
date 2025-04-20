@@ -14,20 +14,26 @@ class ScootersFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scooterService = ScooterService();
+    Future<List<ScooterResponseDTO>>? future;
+    if (district != null && district!.isNotEmpty) {
+      future = scooterService.getScootersDistrict(district!);
+    } else if (address != null && address!.isNotEmpty) {
+      future = scooterService.getScooterByAddress(address!);
+    } else {
+      future = Future.value([]);
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Scooters disponibles")
       ),
-      body: FutureBuilder<dynamic>(
-          future:
-          district!.isNotEmpty ?
-          scooterService.getScootersDistrict(district!) :
-          scooterService.getScooterByAddress(address!),
+      body: FutureBuilder<List<ScooterResponseDTO>>(
+          future:future,
           builder: (BuildContext context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator(color: primary);
             }
-            if (!snapshot.hasData || snapshot.data == null) {
+            if (!snapshot.hasData) {
               return Center(
                 child: Text(
                   "No existen scooters disponibles",
@@ -42,7 +48,7 @@ class ScootersFoundScreen extends StatelessWidget {
             if (snapshot.hasError) {
               return Center(
                 child: Text(
-                  "Ocurrió un error al buscar los scooters",
+                  "Ocurrió un error al buscar los scooters  ",
                   style: TextStyle(
                       color: danger,
                       fontSize: textMid
@@ -51,26 +57,20 @@ class ScootersFoundScreen extends StatelessWidget {
                 ),
               );
             }
-            if (snapshot.hasData) {
-              district!.isNotEmpty ? ListView.builder(
-                  itemCount: (snapshot.data as List<ScooterResponseDTO>).length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ScooterCard(
-                        isPromotion: false,
-                        scooter: snapshot.data[index]
-                    );
-                  }
-              ) : ScooterCard(
-                  isPromotion: false,
-                  scooter: snapshot.data
-              );
-            }
-            return Center(
-              child: Text(
-                "Error desconocido",
-                style: TextStyle(color: danger),
+            final scooters = snapshot.data!;
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ListView.builder(
+                itemCount: scooters.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ScooterCard(
+                    isPromotion: false,
+                    scooter: scooters[index],
+                  );
+                },
               ),
             );
+
           }
       ),
     );

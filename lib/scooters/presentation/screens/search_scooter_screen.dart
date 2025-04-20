@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movirent/scooters/presentation/screens/search_scooter_address_screen.dart';
 import 'package:movirent/scooters/presentation/screens/search_scooter_district_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 
@@ -54,6 +55,9 @@ class SearchScooterScreen extends StatelessWidget {
                 ),
               ),
               GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterAddressScreen()));
+                },
                 child: SizedBox(
                   width: 100,
                   height: 40,

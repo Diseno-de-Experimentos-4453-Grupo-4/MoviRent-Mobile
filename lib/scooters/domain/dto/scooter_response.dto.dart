@@ -6,7 +6,7 @@ class ScooterResponseDTO {
   String? neighborhood;
   String? city;
   String? district;
-  int? price;
+  double? price;
   String? model;
   int? profileId;
 

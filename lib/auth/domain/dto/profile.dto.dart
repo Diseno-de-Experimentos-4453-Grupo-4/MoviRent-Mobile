@@ -4,6 +4,7 @@ class ProfileDTO {
   String? email;
   String? dni;
   int? age;
+  int? id;
   String? phone;
   String? street;
   String? neighborhood;
@@ -11,7 +12,9 @@ class ProfileDTO {
   String? district;
 
   ProfileDTO(
-      {this.firstName,
+      {
+        this.id,
+        this.firstName,
         this.lastName,
         this.email,
         this.dni,
@@ -23,6 +26,7 @@ class ProfileDTO {
         this.district});
 
   ProfileDTO.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     firstName = json['fullName'].toString().split(" ")[0];
     lastName = json['fullName'].toString().split(" ")[1];
     email = json['email'];

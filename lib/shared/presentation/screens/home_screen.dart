@@ -73,18 +73,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterScreen()));
-              },
-              child: Padding(
+            Padding(
                 padding: const EdgeInsets.all(30.0),
                   child: AppTextField(
+                    readOnly: true,
                     hintText: "Empieza a buscar tu scooter ideal",
-                      labelColor: secondary
+                      labelColor: secondary,
+                    suffixIcon:Icons.search,
+                    onSuffixTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterScreen()));
+                    },
                   ),
               ),
-            ),
             ScooterCard(scooter: scooter1),
             ScooterCard(scooter: scooter2)
           ],

@@ -17,7 +17,7 @@ class ScooterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250,
+      width: 300,
       child: GestureDetector(
         onTap: (){
           !isPromotion ? Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen())) :  Navigator.push(context, MaterialPageRoute(builder: (_) => SearchScooterScreen()));
@@ -31,6 +31,7 @@ class ScooterCard extends StatelessWidget {
               Image.network(
                   scooter.image!,
                 width: double.infinity,
+                fit: BoxFit.cover,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -9,6 +9,7 @@ class AppTextField extends StatelessWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixTap;
+  final bool readOnly;
   final String? Function(String?)? validator;
 
   final Color borderColor;
@@ -23,6 +24,7 @@ class AppTextField extends StatelessWidget {
     this.controller,
     this.keyboardType = TextInputType.text,
     this.obscureText = false,
+    this.readOnly = false,
     this.prefixIcon,
     this.suffixIcon,
     this.onSuffixTap,
@@ -41,6 +43,7 @@ class AppTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       cursorColor: labelColor,
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: label,
         hintText: hintText,
