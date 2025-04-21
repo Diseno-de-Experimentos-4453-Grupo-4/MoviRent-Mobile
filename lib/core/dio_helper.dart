@@ -40,7 +40,7 @@ abstract class DioHelper<TResponse,TRequest> {
      final response = await dio.get(
          "${Constant.dev.environment}$resourcePath/${id}"
      );
-     return response.data;
+     return fromJson(response.data);
    }
 
    Future<bool> post(TRequest data) async{
@@ -55,6 +55,13 @@ abstract class DioHelper<TResponse,TRequest> {
      await dio.put(
          "${Constant.dev.environment}$resourcePath/$id",
          data: toJson(data)
+     );
+     return true;
+   }
+
+   Future<bool> delete(int id) async{
+     await dio.delete(
+         "${Constant.dev.environment}$resourcePath/$id",
      );
      return true;
    }

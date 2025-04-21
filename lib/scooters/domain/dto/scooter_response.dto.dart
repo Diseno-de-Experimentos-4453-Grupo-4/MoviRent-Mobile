@@ -2,10 +2,7 @@ class ScooterResponseDTO {
   int? id;
   String? brand;
   String? image;
-  String? street;
-  String? neighborhood;
-  String? city;
-  String? district;
+  String? address;
   double? price;
   String? model;
   int? profileId;
@@ -15,10 +12,7 @@ class ScooterResponseDTO {
         this.id,
         this.brand,
         this.image,
-        this.street,
-        this.neighborhood,
-        this.city,
-        this.district,
+        this.address,
         this.price,
         this.model,
         this.profileId
@@ -28,10 +22,7 @@ class ScooterResponseDTO {
     id = json['id'];
     brand = json['brand'];
     image = json['image'];
-    street = json['street'];
-    neighborhood = json['neighborhood'];
-    city = json['city'];
-    district = json['district'];
+    address = json['address'];
     price = json['price'];
     model = json['model'];
     profileId = json['profileId'];

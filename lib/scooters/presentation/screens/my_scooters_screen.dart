@@ -4,6 +4,7 @@ import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
+import 'package:movirent/scooters/presentation/widgets/scooter_details.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/styles/ui_styles.dart';
@@ -59,14 +60,56 @@ class _MyScootersScreenState extends State<MyScootersScreen> {
               itemCount: snapshot.data!.length,
               shrinkWrap: true,
                 itemBuilder: (context, index){
-                return ListTile(
-                  leading: Image.network(
-                    fit: BoxFit.cover,
-                      snapshot.data![index].image!,
-                    width: 120,
+                return Dismissible(
+                  onDismissed: (_) async {
+                    final confirm = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('¿Estás seguro?'),
+                        content: Text('¿Deseas eliminar este scooter?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: Text('Cancelar'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: Text('Eliminar', style: TextStyle(color: Colors.red)),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (confirm == true) {
+                      await scooterService.delete(snapshot.data![index].id!);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Scooter eliminado')),
+                      );
+                    } else {
+                      setState(() {});
+                    }
+                  },
+
+
+                  key: Key(snapshot.data![index].id.toString()),
+                  background: Container(
+                    color:danger,
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 20),
+                    child: Icon(Icons.delete, color: Colors.white),
                   ),
-                  title:Text(snapshot.data![index].model!),
-                  subtitle: Text("S/. ${snapshot.data![index].price!}"),
+                  child: ListTile(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (_) => ScooterDetails(scooterResponseDTO:snapshot.data![index])));
+                    },
+                    leading: Image.network(
+                      fit: BoxFit.cover,
+                        snapshot.data![index].image!,
+                      width: 120,
+                    ),
+                    title:Text(snapshot.data![index].model!),
+                    subtitle: Text("S/. ${snapshot.data![index].price!}"),
+                  ),
                 );
                 }
             );

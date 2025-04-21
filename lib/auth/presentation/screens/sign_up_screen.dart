@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/domain/dto/sign_up.dto.dart';
@@ -96,7 +97,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 final profileService = ProfileService();
                 final fireAuthService = FireAuthService();
                 final success = await profileService.post(request);
-                await fireAuthService.signUp(request);
+                 try{
+                   await fireAuthService.signUp(request);
+                 } on FirebaseAuthException catch (e) {
+                   if (e.code == 'email-already-in-use') {
+                     ScaffoldMessenger.of(context).showSnackBar(
+                       const SnackBar(content: Text('El usuario en cuestión ya existe')),
+                     );
+                   } else {
+                     rethrow;
+                   }
+                 }
 
                 if (success) {
                   ScaffoldMessenger.of(context).showSnackBar(
