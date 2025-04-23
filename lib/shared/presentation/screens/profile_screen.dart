@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/domain/dto/profile.dto.dart';
+import 'package:movirent/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -67,9 +68,13 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () {
-                // Acción para editar el perfil
-                debugPrint("Editar perfil presionado");
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => EditProfileScreen(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primary,
