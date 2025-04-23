@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movirent/auth/domain/dto/profile.dto.dart';
 import 'package:movirent/auth/domain/dto/sign_up.dto.dart';
 import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
@@ -162,10 +163,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                   //print("Profile ID: ${context.read<ProfileProvider>().profile.id}");
                   //print("Request Data: ${request.toJson()}");
-
                   try {
                     await profileService.put(context.read<ProfileProvider>().profile.id!, request);
-                    Navigator.pop(context, true); // Regresa a la pantalla anterior
+                    // convertir SignUpDTO a ProfileDTO para hacer el update en el provider
+                    final updatedProfile = ProfileDTO(
+                      id: context.read<ProfileProvider>().profile.id,
+                      firstName: request.firstName,
+                      lastName: request.lastName,
+                      email: request.email,
+                      dni: request.dni,
+                      age: request.age,
+                      phone: request.phone,
+                      street: request.street,
+                      neighborhood: request.neighborhood,
+                      city: request.city,
+                      district: request.district,
+                    );
+                    context.read<ProfileProvider>().setProfile(updatedProfile);
+                    Navigator.pop(context, true); 
                   } catch (e) {
                     throw Exception("Error al actualizar el perfil: $e");
                   }
