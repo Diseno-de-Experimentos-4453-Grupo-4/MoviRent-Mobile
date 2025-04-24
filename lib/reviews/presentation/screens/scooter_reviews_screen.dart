@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movirent/auth/domain/dto/profile.dto.dart';
+import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/reviews/domain/dto/rate_response.dto.dart';
 import 'package:movirent/reviews/domain/service/rate.service.dart';
 import 'package:movirent/reviews/presentation/screens/add_review_screen.dart';
@@ -36,6 +38,8 @@ class _ScooterReviewsScreenState extends State<ScooterReviewsScreen> {
       setState(() => _isLoading = false);
     }
   }
+
+
 
   Future<void> _navigateToAddReview(BuildContext context) async {
     final result = await Navigator.push(context, 
@@ -84,9 +88,38 @@ class _ScooterReviewsScreenState extends State<ScooterReviewsScreen> {
   }
 }
 
-class _ReviewCard extends StatelessWidget {
+class _ReviewCard extends StatefulWidget {
   final RateResponseDTO review;
   const _ReviewCard({required this.review});
+
+  @override
+  State<_ReviewCard> createState() => _ReviewCardState();
+}
+
+class _ReviewCardState extends State<_ReviewCard> {
+
+
+  ProfileDTO? profile;
+  final ProfileService profileService = ProfileService();
+
+  Future<void> _loadProfile(int id) async{
+    try{
+      final profileFound = await profileService.getById(id);
+      setState(() {
+        profile = profileFound;
+      });
+    } catch (e){
+      throw Exception("An error has ocurred while trying to found current profile $e");
+    }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    () async {
+      _loadProfile(widget.review.profileId!);
+    }();
+  }
 
   @override
   Widget build(BuildContext) {
@@ -98,12 +131,17 @@ class _ReviewCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Usuario: ${review.profileId}",
+              "${profile!.firstName} ${profile!.lastName}",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              "${widget.review.comment}",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 8),
             Row(
-              children: List.generate(5, (i) => Icon(i < (review.starNumb ?? 0) ? Icons.star : Icons.star_border,
+              children: List.generate(5, (i) => Icon(i < (widget.review.starNumb ?? 0) ? Icons.star : Icons.star_border,
                 color: Colors.amber,
               )),
             ),

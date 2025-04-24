@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/reviews/presentation/screens/my_reviews_screen.dart';
 import 'package:movirent/scooters/presentation/screens/my_scooters_screen.dart';
 import 'package:movirent/shared/presentation/screens/profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
+import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
   final String name;
@@ -12,6 +15,7 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = context.watch<ProfileProvider>();
     return Container(
       color: primary,
       height: double.infinity,
@@ -54,13 +58,17 @@ class CustomDrawer extends StatelessWidget {
           Text("Mis reservas"),
           SizedBox(height: 20),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             icon: Icon(Icons.report),
           ),
           Text("Mis reportes"),
           SizedBox(height: 20),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => MyReviewsScreen(userId: profileProvider.profile.id!)));
+            },
             icon: const Icon(Icons.report),
           ),
           Text("Mis reseñas"),

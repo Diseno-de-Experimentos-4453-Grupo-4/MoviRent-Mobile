@@ -9,7 +9,7 @@ import 'package:movirent/reviews/domain/dto/rate_response.dto.dart';
 class RateService extends DioHelper<RateResponseDTO, RateRequestDTO> {
   RateService()
     :super(
-      'reviews',
+      'rate',
       (json) => RateResponseDTO.fromJson(json),
       (data) => (data as RateRequestDTO).toJson(),
     );
@@ -17,13 +17,31 @@ class RateService extends DioHelper<RateResponseDTO, RateRequestDTO> {
   Future<List<RateResponseDTO>> getReviewsByScooter(int scooterId) async {
     try {
       final response = await dio.get(
-        '${Constant.dev.environment}$resourcePath/scooter/$scooterId'
+        '${Constant.dev.environment}$resourcePath/scooter?scooterId=$scooterId'
       );
 
       if (response.statusCode == 200) {
         return (response.data as List)
           .map((json) => RateResponseDTO.fromJson(json))
           .toList();
+      }
+      return [];
+    } catch (e) {
+      debugPrint("Error fetching reviews: $e");
+      return [];
+    }
+  }
+
+  Future<List<RateResponseDTO>> getReviewsByProfile(int profileId) async {
+    try {
+      final response = await dio.get(
+          '${Constant.dev.environment}$resourcePath/profile?profileId=$profileId'
+      );
+
+      if (response.statusCode == 200) {
+        return (response.data as List)
+            .map((json) => RateResponseDTO.fromJson(json))
+            .toList();
       }
       return [];
     } catch (e) {
