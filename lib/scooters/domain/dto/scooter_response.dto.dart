@@ -6,6 +6,7 @@ class ScooterResponseDTO {
   double? price;
   String? model;
   int? profileId;
+  bool? isAvailable;
 
   ScooterResponseDTO(
       {
@@ -15,7 +16,8 @@ class ScooterResponseDTO {
         this.address,
         this.price,
         this.model,
-        this.profileId
+        this.profileId,
+        this.isAvailable
       });
 
   ScooterResponseDTO.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class ScooterResponseDTO {
     price = json['price'];
     model = json['model'];
     profileId = json['profileId'];
+    isAvailable = json['isAvailable'];
   }
 
 }

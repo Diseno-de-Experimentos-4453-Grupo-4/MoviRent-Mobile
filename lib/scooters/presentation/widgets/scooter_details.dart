@@ -170,6 +170,16 @@ class _ScooterDetailsState extends State<ScooterDetails> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Estado: ${widget.scooterResponseDTO.isAvailable! ? "Disponible" : "Reservado"}",
+                style: TextStyle(
+                    fontSize: textMid,
+                  color: widget.scooterResponseDTO.isAvailable! ?Colors.green : danger
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
                   Text(
