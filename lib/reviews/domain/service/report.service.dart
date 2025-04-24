@@ -29,4 +29,23 @@ class ReportService extends DioHelper<ReportResponseDTO,ReportRequestDTO>{
       return [];
     }
   }
+
+  Future<List<ReportResponseDTO>> getReportsByProfile(int profileId) async {
+    try {
+      final response = await dio.get(
+          '${Constant.dev.environment}$resourcePath/profile?profileId=$profileId'
+      );
+
+      if (response.statusCode == 200) {
+        return (response.data as List)
+            .map((json) => ReportResponseDTO.fromJson(json))
+            .toList();
+      }
+      return [];
+    } catch (e) {
+      debugPrint("Error fetching reports: $e");
+      return [];
+    }
+  }
+
 }
