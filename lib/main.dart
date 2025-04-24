@@ -1,11 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
 import 'package:movirent/auth/presentation/screens/auth_screen.dart';
-import 'package:movirent/reviews/presentation/screens/add_review_screen.dart';
-import 'package:movirent/reviews/presentation/screens/scooter_reports_screen.dart';
-import 'package:movirent/reviews/presentation/screens/scooter_reviews_screen.dart';
 import 'package:movirent/shared/presentation/providers/ui_provider.dart';
 import 'package:movirent/ui/theme/app_theme.dart';
 import 'package:provider/provider.dart';

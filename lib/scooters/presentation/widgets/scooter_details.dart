@@ -12,6 +12,7 @@ import 'package:movirent/shared/infrastructre/service/imgur.service.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
+import '../../../reviews/presentation/screens/scooter_reports_screen.dart';
 import '../../../ui/styles/ui_styles.dart';
 
 class ScooterDetails extends StatefulWidget {
@@ -215,14 +216,14 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                   ),
                   IconButton(
                     onPressed: () {
-                      /* Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => ScooterReportsScreen(
-                            scooterId: widget.scooterResponseDTO.id!.toString(),
+                            scooterId: widget.scooterResponseDTO.id!,
                           ),
                         ),
-                      ); */
+                      );
                     },
                     icon: Icon(Icons.arrow_forward_ios_sharp, color: danger),
                   ),
