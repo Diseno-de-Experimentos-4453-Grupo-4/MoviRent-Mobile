@@ -61,9 +61,19 @@ class _MyReviewsScreenState extends State<MyReviewsScreen> {
           itemCount: _reviews.length,
           itemBuilder:
               (ctx, index) =>
-                  GestureDetector(
-                    onTap: ()async {
-
+                  Dismissible(
+                    key: Key(_reviews[index].id.toString()),
+                    background: Container(
+                      color:danger,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.only(left: 20),
+                      child: Icon(Icons.delete, color: Colors.white),
+                    ),
+                    onDismissed: (_) async{
+                      await _rateService.delete(_reviews[index].id!);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Reseña eliminada')),
+                      );
                     },
                     child: _ReviewCard(review: _reviews[index]
                     ),

@@ -38,7 +38,7 @@ abstract class DioHelper<TResponse,TRequest> {
 
    Future<TResponse> getById(int id) async{
      final response = await dio.get(
-         "${Constant.dev.environment}$resourcePath/${id}"
+         "${Constant.dev.environment}$resourcePath/$id"
      );
      return fromJson(response.data);
    }

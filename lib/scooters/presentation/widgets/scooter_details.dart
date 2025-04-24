@@ -195,7 +195,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                         context,
                         MaterialPageRoute(
                           builder: (_) => ScooterReviewsScreen(
-                            scooterId: widget.scooterResponseDTO.id!.toString(),
+                            scooterId: widget.scooterResponseDTO.id!,
                           ),
                         ),
                       );

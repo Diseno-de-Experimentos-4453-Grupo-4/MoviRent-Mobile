@@ -8,7 +8,7 @@ import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
 
 class AddReviewScreen extends StatefulWidget {
-  final String scooterId;
+  final int scooterId;
   const AddReviewScreen({super.key, required this.scooterId});
 
   @override
@@ -79,7 +79,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         comment: _commentController.text,
         starNumb: _rating,
         profileId: profileId,
-        scooterId: int.parse(widget.scooterId),
+        scooterId: widget.scooterId,
       );
 
       try {

@@ -7,7 +7,7 @@ import 'package:movirent/reviews/presentation/screens/add_review_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 
 class ScooterReviewsScreen extends StatefulWidget {
-  final String scooterId;
+  final int scooterId;
   const ScooterReviewsScreen({super.key, required this.scooterId});
   
   @override
@@ -28,7 +28,7 @@ class _ScooterReviewsScreenState extends State<ScooterReviewsScreen> {
   Future<void> _loadReviews() async {
     setState(() => _isLoading = true);
     try {
-      final reviews = await _rateService.getReviewsByScooter(int.parse(widget.scooterId));
+      final reviews = await _rateService.getReviewsByScooter(widget.scooterId);
       setState(() => _reviews = reviews);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -122,7 +122,7 @@ class _ReviewCardState extends State<_ReviewCard> {
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(8.0),
       child: Padding(
@@ -130,7 +130,9 @@ class _ReviewCardState extends State<_ReviewCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            profile == null
+                ? CircularProgressIndicator()
+                : Text(
               "${profile!.firstName} ${profile!.lastName}",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -141,7 +143,10 @@ class _ReviewCardState extends State<_ReviewCard> {
             ),
             SizedBox(height: 8),
             Row(
-              children: List.generate(5, (i) => Icon(i < (widget.review.starNumb ?? 0) ? Icons.star : Icons.star_border,
+              children: List.generate(5, (i) => Icon(
+                i < (widget.review.starNumb ?? 0)
+                    ? Icons.star
+                    : Icons.star_border,
                 color: Colors.amber,
               )),
             ),
@@ -150,4 +155,5 @@ class _ReviewCardState extends State<_ReviewCard> {
       ),
     );
   }
+
 }

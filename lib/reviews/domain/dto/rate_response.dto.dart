@@ -19,8 +19,8 @@ class RateResponseDTO {
     id = json['id'];
     comment = json['comment'];
     starNumb = json['starNumb'];
-    profileId = json['profileId'];
-    scooterId = json['scooterId'];
+    profileId = json['scooterId'];
+    scooterId = json['profileId'];
   }
 
 }
