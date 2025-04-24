@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:movirent/auth/domain/dto/profile.dto.dart';
+import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
+import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final ProfileDTO profile;
-
-  const ProfileScreen({super.key, required this.profile});
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
+    final profile = context.watch<ProfileProvider>().profile;
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
@@ -67,9 +74,18 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () {
-                // Acción para editar el perfil
-                debugPrint("Editar perfil presionado");
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const EditProfileScreen(),
+                  ),
+                );
+
+                if (result == true) {
+                  // Reconstruye la pantalla para reflejar los cambios
+                  setState(() {});
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: primary,
