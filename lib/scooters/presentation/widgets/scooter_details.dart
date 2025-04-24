@@ -6,6 +6,8 @@ import 'package:movirent/auth/presentation/providers/profile_provider.dart';
 import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
+import 'package:movirent/reviews/presentation/screens/add_review_screen.dart';
+import 'package:movirent/reviews/presentation/screens/scooter_reviews_screen.dart';
 import 'package:movirent/shared/infrastructre/service/imgur.service.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
@@ -178,7 +180,16 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                         fontWeight: FontWeight.bold),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ScooterReviewsScreen(
+                            scooterId: widget.scooterResponseDTO.id!.toString(),
+                          ),
+                        ),
+                      );
+                    },
                     icon: Icon(Icons.arrow_forward_ios_sharp, color: primary),
                   ),
                 ],
@@ -193,7 +204,16 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                     style: TextStyle(fontSize: textMid, color: danger),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      /* Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ScooterReportsScreen(
+                            scooterId: widget.scooterResponseDTO.id!.toString(),
+                          ),
+                        ),
+                      ); */
+                    },
                     icon: Icon(Icons.arrow_forward_ios_sharp, color: danger),
                   ),
                 ],
