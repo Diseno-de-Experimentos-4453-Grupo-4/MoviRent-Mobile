@@ -78,6 +78,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                 style: TextStyle(fontSize: textMid),
               ),
             ),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Dirección: ${widget.scooterResponseDTO.address}",
+                style: TextStyle(fontSize: textMid),
+              ),
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.all(8.0),
