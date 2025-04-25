@@ -7,6 +7,7 @@ import 'package:movirent/shared/presentation/screens/profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
 
+import '../../../booking/presentation/screens/my_bookings_screen.dart';
 import '../../../reviews/presentation/screens/my_reports_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -54,6 +55,7 @@ class CustomDrawer extends StatelessWidget {
           SizedBox(height: 20),
           IconButton(
             onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => MyBookingsScreen(userId: profileProvider.profile.id!)));
             },
             icon: Icon(Icons.calendar_month),
           ),

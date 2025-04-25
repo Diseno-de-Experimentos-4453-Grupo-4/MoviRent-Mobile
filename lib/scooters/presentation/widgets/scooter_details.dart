@@ -209,6 +209,33 @@ class _ScooterDetailsState extends State<ScooterDetails> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text(
+                    "Ver reportes",
+                    style: TextStyle(
+                        fontSize: textMid,
+                        color: danger,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ScooterReportsScreen(
+                            scooterId: widget.scooterResponseDTO.id!,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.arrow_forward_ios_sharp, color: danger),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: isOwn
                   ? AppButton(
                 backgroundButton: primary,
