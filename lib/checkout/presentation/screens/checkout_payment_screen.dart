@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
+import 'package:movirent/booking/domain/dto/booking_request.dto.dart';
+import 'package:movirent/booking/domain/service/booking.service.dart';
 import 'package:movirent/checkout/domain/dto/invoice_request.dto.dart';
 import 'package:movirent/checkout/domain/services/invoice.service.dart';
 import 'package:movirent/shared/presentation/screens/home_screen.dart';
@@ -13,8 +15,10 @@ class CheckoutPaymentScreen extends StatelessWidget {
   final String title;
   final String description;
   final int userId;
+  final int? scooterId;
   final bool isSubscription;
-  const CheckoutPaymentScreen({super.key, required this.title, required this.userId, required this.description, required this.isSubscription});
+  final double? price;
+  const CheckoutPaymentScreen({super.key, required this.title, required this.userId, required this.description, required this.isSubscription, this.price, this.scooterId});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,10 @@ class CheckoutPaymentScreen extends StatelessWidget {
               final subscriptionService = SubscriptionService();
               final request = SubscriptionRequestDTO(profileId: userId);
               await subscriptionService.post(request);
+            } else{
+              final bookingService = BookingService();
+              final request = BookingRequestDTO(profileId: userId,scooterId: scooterId);
+              await bookingService.post(request);
             }
             final request = InvoiceRequestDTO(profileId: userId, amount: 60);
             await invoiceService.post(request);
@@ -54,7 +62,7 @@ class CheckoutPaymentScreen extends StatelessWidget {
           transactions:   [
             {
               "amount":{
-                "total":'20.5',
+                "total": price != null ? price.toString() : "20.5",
                 'currency': 'USD'
               },
               "description": description

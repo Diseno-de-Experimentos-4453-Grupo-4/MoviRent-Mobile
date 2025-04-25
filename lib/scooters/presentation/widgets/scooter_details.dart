@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/checkout/presentation/screens/checkout_payment_screen.dart';
 import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
@@ -208,35 +209,11 @@ class _ScooterDetailsState extends State<ScooterDetails> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Text(
-                    "Ver reportes",
-                    style: TextStyle(fontSize: textMid, color: danger),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => ScooterReportsScreen(
-                            scooterId: widget.scooterResponseDTO.id!,
-                          ),
-                        ),
-                      );
-                    },
-                    icon: Icon(Icons.arrow_forward_ios_sharp, color: danger),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
               child: isOwn
                   ? AppButton(
                 backgroundButton: primary,
-                onPressed: () async{
-                  if (editMode){
+                onPressed: () async {
+                  if (editMode) {
                     final request = ScooterRequestDTO(
                       brand: brandController.text,
                       model: modelController.text,
@@ -248,15 +225,15 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                       city: addressController.text.split(",")[2],
                       district: addressController.text.split(",")[3],
                     );
-                   try{
-                     final response =  await scooterService.put(widget.scooterResponseDTO.id!, request);
-                     setState(() {
-                       editMode = !editMode;
-                     });
-                   } catch (e){
-                     throw Exception("An error has ocurred while trying to update scooter $e");
-                   }
-                  } else{
+                    try {
+                      final response = await scooterService.put(widget.scooterResponseDTO.id!, request);
+                      setState(() {
+                        editMode = !editMode;
+                      });
+                    } catch (e) {
+                      throw Exception("An error has occurred while trying to update scooter $e");
+                    }
+                  } else {
                     setState(() {
                       editMode = !editMode;
                     });
@@ -264,12 +241,36 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                 },
                 label: editMode ? "Guardar" : "Editar",
               )
+                  : !widget.scooterResponseDTO.isAvailable!
+                  ? AppButton(
+                backgroundButton: Colors.grey,
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Este scooter no está disponible actualmente")),
+                  );
+                },
+                label: "No disponible",
+              )
                   : AppButton(
                 backgroundButton: danger,
-                onPressed: () {},
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => CheckoutPaymentScreen(
+                        title: "Final el pago de alquiler",
+                        userId: widget.scooterResponseDTO.profileId!,
+                        description: "Completa el pago de alquiler de tu scooter",
+                        isSubscription: false,
+                        scooterId: widget.scooterResponseDTO.id,
+                        price: widget.scooterResponseDTO.price,
+                      ),
+                    ),
+                  );
+                },
                 label: "Alquilar",
               ),
-            ),
+            )
           ],
         ),
       ),
