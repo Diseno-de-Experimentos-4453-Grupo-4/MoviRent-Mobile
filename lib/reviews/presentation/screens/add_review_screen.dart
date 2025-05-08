@@ -7,6 +7,8 @@ import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/presentation/widgets/custom_alert.dart';
+
 class AddReviewScreen extends StatefulWidget {
   final int scooterId;
   const AddReviewScreen({super.key, required this.scooterId});
@@ -84,10 +86,32 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
 
       try {
         await _rateService.submitReview(request);
-        Navigator.pop(context, true);
+        await showDialog(
+            context: context,
+            builder: (context){
+              return CustomAlert(
+                  title: "Reseña creada con éxito",
+                  content: "La reseña se creo exitosamente",
+                  isSuccess: true,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+              );
+            }
+        );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error al enviar la reseña: $e"),)
+        await showDialog(
+            context: context,
+            builder: (context){
+              return CustomAlert(
+                  title: "Ocurrio un error al crear la reseña",
+                  content: "Por favor, intentelo más tarde",
+                  isSuccess: false,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+              );
+            }
         );
       }
     }

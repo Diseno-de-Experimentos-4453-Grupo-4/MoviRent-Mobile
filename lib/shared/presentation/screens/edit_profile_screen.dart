@@ -7,6 +7,7 @@ import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 import '../../../ui/styles/ui_styles.dart';
+import '../widgets/custom_alert.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -180,9 +181,33 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       district: request.district,
                     );
                     context.read<ProfileProvider>().setProfile(updatedProfile);
-                    Navigator.pop(context, true); 
+                    await showDialog(
+                        context: context,
+                        builder: (context){
+                          return CustomAlert(
+                              title: "Datos de perfil editados",
+                              content: "Se actualizaron correctamente los datos del perfil",
+                              isSuccess: true,
+                              onPressed: (){
+                                Navigator.pop(context);
+                              }
+                          );
+                        }
+                    );
                   } catch (e) {
-                    throw Exception("Error al actualizar el perfil: $e");
+                    await showDialog(
+                        context: context,
+                        builder: (context){
+                          return CustomAlert(
+                              title: "Ocurrió un error",
+                              content: "Ocurrión un error al actualizar los datos de su perfil, por favor intentelo más tarde",
+                              isSuccess: false,
+                              onPressed: (){
+                                Navigator.pop(context);
+                              }
+                          );
+                        }
+                    );
                   }
                 },
                 label: "Guardar",

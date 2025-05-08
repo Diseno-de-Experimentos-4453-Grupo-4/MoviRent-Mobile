@@ -7,8 +7,10 @@ import 'package:movirent/auth/presentation/providers/profile_provider.dart';
 import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
 import 'package:movirent/shared/infrastructre/service/imgur.service.dart';
+import 'package:movirent/shared/presentation/screens/home_screen.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
+import 'package:movirent/shared/presentation/widgets/custom_alert.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
 
@@ -165,13 +167,32 @@ class _PublishScooterState extends State<PublishScooter> {
                       );
                       try{
                         await scooterService.post(request);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Scooter publicada con éxito')),
+                        await showDialog(
+                            context: context,
+                            builder: (context){
+                              return CustomAlert(
+                                  title: "Publicación exitosa",
+                                  content: "Tu scooter ha sido publicado con éxito!",
+                                  isSuccess: true,
+                                  onPressed: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                                  }
+                              );
+                            }
                         );
-                        Navigator.pop(context);
                       } catch (e){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Ocurrio un error al publicar el scooter')),
+                        await showDialog(
+                            context: context,
+                            builder: (context){
+                              return CustomAlert(
+                                  title: "Error al publicar el scooter",
+                                  content: "Ocurrió un error al publicar el scooter, por favor asegurese de llenar todos los campos",
+                                  isSuccess: false,
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }
+                              );
+                            }
                         );
                       }
                     },

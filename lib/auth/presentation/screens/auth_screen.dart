@@ -8,6 +8,7 @@ import 'package:movirent/shared/presentation/screens/home_screen.dart';
 
 import '../../../shared/presentation/widgets/app_button.dart';
 import '../../../shared/presentation/widgets/app_text_field.dart';
+import '../../../shared/presentation/widgets/custom_alert.dart';
 import '../../../ui/styles/ui_styles.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -75,9 +76,27 @@ class _AuthScreenState extends State<AuthScreen> {
                     final token = await fireAuthService.signIn(request);
                     await SharedHelper().setToken(token!);
                     await SharedHelper().setEmail(emailController.text);
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                  } catch (e){
-                    throw Exception("An error has ocurred in sign in process $e");
+                    await showDialog(
+                      context: context,
+                      builder: (context) => CustomAlert(
+                        title: "Inicio de sesión exitoso",
+                        content: "Bienvenido a MoviRent!",
+                        isSuccess: true,
+                        onPressed: () {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                        },
+                      ),
+                    );
+                  } catch (_){
+                    await showDialog(
+                      context: context,
+                      builder: (context) => CustomAlert(
+                        title: "Ocurrió un error en el inicio de sesión",
+                        content: "Las credenciales proporcionadas no son validas",
+                        isSuccess: false,
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    );
                   }
 
                 },

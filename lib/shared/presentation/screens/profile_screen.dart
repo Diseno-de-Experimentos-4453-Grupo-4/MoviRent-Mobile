@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/core/shared_helper.dart';
 import 'package:movirent/shared/presentation/screens/edit_profile_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
+
+import '../../../auth/presentation/screens/auth_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -83,7 +86,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
 
                 if (result == true) {
-                  // Reconstruye la pantalla para reflejar los cambios
                   setState(() {});
                 }
               },
@@ -97,6 +99,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               child: const Text(
                 "Editar Perfil",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () async{
+                final SharedHelper helper = SharedHelper();
+                helper.removeEmail();
+                helper.removeToken();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const AuthScreen(),
+                  )
+                );
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: danger,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: const Text(
+                "Cerrar sesión",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ),

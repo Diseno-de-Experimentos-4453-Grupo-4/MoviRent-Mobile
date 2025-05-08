@@ -8,6 +8,7 @@ import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/presentation/widgets/custom_alert.dart';
 import '../../domain/dto/report_request.dto.dart';
 
 class AddReportScreen extends StatefulWidget {
@@ -71,10 +72,32 @@ class _AddReportScreenState extends State<AddReportScreen> {
       );
       try {
         await _reportService.post(request);
-        Navigator.pop(context, true);
+        await showDialog(
+            context: context,
+            builder: (context){
+              return CustomAlert(
+                  title: "Reporte creado con éxito",
+                  content: "El reporte se creo exitosamente",
+                  isSuccess: true,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+              );
+            }
+        );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error al enviar la reseña: $e"),)
+        await showDialog(
+            context: context,
+            builder: (context){
+              return CustomAlert(
+                  title: "Ocurrio un error al crear el reporte",
+                  content: "Por favor, intentelo más tarde",
+                  isSuccess: false,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  }
+              );
+            }
         );
       }
     }

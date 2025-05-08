@@ -5,6 +5,7 @@ import 'package:movirent/auth/domain/dto/sign_up.dto.dart';
 import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/infrastructure/service/fireauth.service.dart';
 import 'package:movirent/auth/presentation/screens/auth_screen.dart';
+import 'package:movirent/shared/presentation/widgets/custom_alert.dart';
 
 import '../../../shared/presentation/widgets/app_button.dart';
 import '../../../shared/presentation/widgets/app_text_field.dart';
@@ -96,29 +97,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 final profileService = ProfileService();
                 final fireAuthService = FireAuthService();
-                final success = await profileService.post(request);
                  try{
+                   final success = await profileService.post(request);
                    await fireAuthService.signUp(request);
-                 } on FirebaseAuthException catch (e) {
-                   if (e.code == 'email-already-in-use') {
-                     ScaffoldMessenger.of(context).showSnackBar(
-                       const SnackBar(content: Text('El usuario en cuestión ya existe')),
+                   if (success){
+                     await showDialog(
+                       context: context,
+                       builder: (context) => CustomAlert(
+                         title: "Registro exitoso",
+                         content: "El usuario se registro con exito",
+                         isSuccess: true,
+                         onPressed: () {
+                           Navigator.push(context, MaterialPageRoute(builder: (_) => AuthScreen()));
+                         },
+                       ),
                      );
-                   } else {
-                     rethrow;
                    }
+                 } catch(_){
+                   await showDialog(
+                     context: context,
+                     builder: (context) => CustomAlert(
+                       title: "Ocurrió un error en el registro",
+                       content: "El usuario en cuestión ya existe",
+                       isSuccess: false,
+                       onPressed: () => Navigator.of(context).pop(),
+                     ),
+                   );
                  }
-
-                if (success) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Registro exitoso')),
-                  );
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => AuthScreen()));
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Error al registrar')),
-                  );
-                }
               },
               label: "Registrate",
             )

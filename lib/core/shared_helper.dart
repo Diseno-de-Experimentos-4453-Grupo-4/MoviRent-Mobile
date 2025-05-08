@@ -20,4 +20,14 @@ class SharedHelper{
     final instance = await SharedPreferences.getInstance();
     return instance.getString("email");
   }
+
+  Future<void> removeEmail() async{
+    final instance = await SharedPreferences.getInstance();
+    instance.remove("email");
+  }
+
+  Future<void> removeToken() async{
+    final instance = await SharedPreferences.getInstance();
+    instance.remove("token");
+  }
 }

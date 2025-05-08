@@ -7,7 +7,6 @@ import 'package:movirent/checkout/presentation/screens/checkout_payment_screen.d
 import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
-import 'package:movirent/reviews/presentation/screens/add_review_screen.dart';
 import 'package:movirent/reviews/presentation/screens/scooter_reviews_screen.dart';
 import 'package:movirent/shared/infrastructre/service/imgur.service.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
@@ -81,6 +80,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final profileProvider = context.watch<ProfileProvider>();
     return Scaffold(
       appBar: AppBar(
         foregroundColor: secondary,
@@ -253,7 +253,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                       district: addressController.text.split(",")[3],
                     );
                     try {
-                      final response = await scooterService.put(widget.scooterResponseDTO.id!, request);
+                      await scooterService.put(widget.scooterResponseDTO.id!, request);
                       setState(() {
                         editMode = !editMode;
                       });
@@ -286,7 +286,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                     MaterialPageRoute(
                       builder: (_) => CheckoutPaymentScreen(
                         title: "Final el pago de alquiler",
-                        userId: widget.scooterResponseDTO.profileId!,
+                        userId: profileProvider.profile.id!,
                         description: "Completa el pago de alquiler de tu scooter",
                         isSubscription: false,
                         scooterId: widget.scooterResponseDTO.id,
