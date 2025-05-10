@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
+import 'package:movirent/booking/presentation/screens/own_spaces_bookings_screen.dart';
 import 'package:movirent/reviews/presentation/screens/my_reviews_screen.dart';
 import 'package:movirent/scooters/presentation/screens/my_scooters_screen.dart';
 import 'package:movirent/shared/presentation/screens/profile_screen.dart';
@@ -60,6 +61,14 @@ class CustomDrawer extends StatelessWidget {
             icon: Icon(Icons.calendar_month),
           ),
           Text("Mis reservas"),
+          SizedBox(height: 20),
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => OwnSpacesBookingsScreen(userId: profileProvider.profile.id!)));
+            },
+            icon: Icon(Icons.calendar_today_rounded),
+          ),
+          Text("Reservas a mis espacios"),
           SizedBox(height: 20),
           IconButton(
             onPressed: () {

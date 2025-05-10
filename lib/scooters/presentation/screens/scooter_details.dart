@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
-import 'package:movirent/checkout/presentation/screens/checkout_payment_screen.dart';
+import 'package:movirent/booking/domain/dto/booking_request.dto.dart';
+import 'package:movirent/booking/domain/service/booking.service.dart';
 import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
@@ -13,6 +14,8 @@ import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 import '../../../reviews/presentation/screens/scooter_reports_screen.dart';
+import '../../../shared/presentation/screens/home_screen.dart';
+import '../../../shared/presentation/widgets/custom_alert.dart';
 import '../../../ui/styles/ui_styles.dart';
 
 class ScooterDetails extends StatefulWidget {
@@ -34,8 +37,26 @@ class _ScooterDetailsState extends State<ScooterDetails> {
 
   final imgUrService = ImgUrService();
   final scooterService = ScooterService();
+  final bookingService = BookingService();
   XFile? _selectedImage;
   String currentImage = "";
+
+  XFile? _selectedBaucher;
+  String currentBaucher = "";
+
+
+  Future<void> _pickBaucher() async {
+    final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picked != null) {
+      setState(() {
+        _selectedBaucher = picked;
+      });
+      final url = await imgUrService.uploadStaticImageToImgUr(_selectedBaucher!);
+      setState(() {
+        currentBaucher = url;
+      });
+    }
+  }
 
   Future<void> _pickImage() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -60,7 +81,6 @@ class _ScooterDetailsState extends State<ScooterDetails> {
     addressController = TextEditingController(text: scooter.address);
     priceController = TextEditingController(text: scooter.price.toString());
     currentImage = scooter.image ?? "";
-
     () async {
       final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
       if (scooter.profileId == profileProvider.profile.id) {
@@ -251,6 +271,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                       neighborhood: addressController.text.split(",")[1],
                       city: addressController.text.split(",")[2],
                       district: addressController.text.split(",")[3],
+                      bankAccount: widget.scooterResponseDTO.bankAccount
                     );
                     try {
                       await scooterService.put(widget.scooterResponseDTO.id!, request);
@@ -281,18 +302,99 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                   : AppButton(
                 backgroundButton: danger,
                 onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => CheckoutPaymentScreen(
-                        title: "Final el pago de alquiler",
-                        userId: profileProvider.profile.id!,
-                        description: "Completa el pago de alquiler de tu scooter",
-                        isSubscription: false,
-                        scooterId: widget.scooterResponseDTO.id,
-                        price: widget.scooterResponseDTO.price,
-                      ),
-                    ),
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: primary,
+                        title: const Text("Completar reserva"),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Para completar la reserva por favor suba su baucher de compra, la cuenta del usuario es la siguiente: ${widget.scooterResponseDTO.bankAccount}",
+                              style: TextStyle(
+                                  color: background,
+                                  fontSize: textMid,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              "La empresa no se hace responsable de las transacciones realizadas entre los usuarios.",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: secondary,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            Image.network(currentBaucher.isNotEmpty ? currentBaucher
+                                : "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg"),
+                            const SizedBox(height: 20),
+                            AppButton(
+                                backgroundButton:warn,
+                                onPressed: () async {
+                                   await _pickBaucher();
+                                },
+                                label: "Subir Baucher"
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                AppButton(
+                                  onPressed: () => Navigator.of(context).pop(true),
+                                  backgroundButton: danger,
+                                  label: 'Cancelar',
+                                ),
+                                const SizedBox(width: 8),
+                                AppButton(
+                                  onPressed: ()async{
+                                    BookingRequestDTO data = BookingRequestDTO(
+                                        profileId: profileProvider.profile.id,
+                                        scooterId: widget.scooterResponseDTO.id,
+                                        baucher: currentBaucher
+                                    );
+                                    try{
+                                      await bookingService.post(data);
+                                      await showDialog(
+                                          context: context,
+                                          builder: (context){
+                                            return CustomAlert(
+                                              title: 'Reserva completada',
+                                              content: 'El baucher de compra sera enviado al dueño del scooter para completar la reserva.',
+                                              isSuccess: true,
+                                              onPressed: () {
+                                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                                              },
+                                            );
+                                          }
+                                      );
+                                    } catch (e){
+                                      await showDialog(
+                                          context: context,
+                                          builder: (context){
+                                            return  CustomAlert(
+                                              title: 'Ocurrio un error al completar la reserva',
+                                              content: 'Ocurrio un error al completar la reserva, por favor intentelo mas tarde.',
+                                              isSuccess: false,
+                                              onPressed: () {
+                                                Navigator.of(context).pop(true);
+                                              },
+                                            );
+                                          }
+                                      );
+                                    }
+                                  },
+                                  backgroundButton: warn,
+                                  label: 'Confirmar',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   );
                 },
                 label: "Alquilar",

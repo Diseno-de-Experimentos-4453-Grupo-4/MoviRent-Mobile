@@ -8,6 +8,7 @@ class ScooterRequestDTO {
   double? price;
   String? model;
   int? profileId;
+  String? bankAccount;
 
   ScooterRequestDTO(
       {this.brand,
@@ -18,7 +19,9 @@ class ScooterRequestDTO {
         this.district,
         this.price,
         this.model,
-        this.profileId});
+        this.profileId,
+        this.bankAccount
+      });
 
 
   Map<String, dynamic> toJson() {
@@ -32,6 +35,7 @@ class ScooterRequestDTO {
     data['price'] = price;
     data['model'] = model;
     data['profileId'] = profileId;
+    data['bankAccount'] = bankAccount;
     return data;
   }
 }

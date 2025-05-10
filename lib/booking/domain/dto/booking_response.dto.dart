@@ -4,9 +4,11 @@ class BookingResponseDTO {
   String? endDate;
   int? profileId;
   int? scooterId;
+  String? baucher;
+  int? statusId;
 
   BookingResponseDTO(
-      {this.id, this.startDate, this.endDate, this.profileId, this.scooterId});
+      {this.id, this.startDate, this.endDate, this.profileId, this.scooterId, this.baucher, this.statusId});
 
   BookingResponseDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -14,6 +16,8 @@ class BookingResponseDTO {
     endDate = json['endDate'];
     profileId = json['profileId'];
     scooterId = json['scooterId'];
+    baucher = json['baucher'];
+    statusId = json['statusId'];
   }
 
 }

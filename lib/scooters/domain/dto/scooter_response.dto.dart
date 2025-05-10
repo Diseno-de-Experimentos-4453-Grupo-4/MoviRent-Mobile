@@ -7,6 +7,7 @@ class ScooterResponseDTO {
   String? model;
   int? profileId;
   bool? isAvailable;
+  String? bankAccount;
 
   ScooterResponseDTO(
       {
@@ -17,7 +18,8 @@ class ScooterResponseDTO {
         this.price,
         this.model,
         this.profileId,
-        this.isAvailable
+        this.isAvailable,
+        this.bankAccount
       });
 
   ScooterResponseDTO.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class ScooterResponseDTO {
     model = json['model'];
     profileId = json['profileId'];
     isAvailable = json['isAvailable'];
+    bankAccount = json['bankAccount'];
   }
 
 }

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/presentation/screens/search_scooter_screen.dart';
-import 'package:movirent/scooters/presentation/widgets/scooter_details.dart';
+import 'package:movirent/scooters/presentation/screens/scooter_details.dart';
 import 'package:movirent/shared/presentation/screens/home_screen.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
 

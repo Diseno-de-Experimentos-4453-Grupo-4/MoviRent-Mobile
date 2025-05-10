@@ -26,7 +26,6 @@ class _PublishScooterState extends State<PublishScooter> {
   String currentImage = "";
   XFile? _selectedImage;
 
-  // Controllers para los campos de texto
   final TextEditingController brandController = TextEditingController();
   final TextEditingController modelController = TextEditingController();
   final TextEditingController streetController = TextEditingController();
@@ -34,6 +33,7 @@ class _PublishScooterState extends State<PublishScooter> {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController bankAccountController = TextEditingController();
 
   Future<void> _pickImage() async {
     final picked = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -59,6 +59,7 @@ class _PublishScooterState extends State<PublishScooter> {
     cityController.dispose();
     districtController.dispose();
     priceController.dispose();
+    bankAccountController.dispose();
     super.dispose();
   }
 
@@ -151,6 +152,13 @@ class _PublishScooterState extends State<PublishScooter> {
                     controller: priceController,
                   ),
                   SizedBox(height: 12),
+                  AppTextField(
+                    labelColor: secondary,
+                    label: "Cuenta bancaria",
+                    keyboardType: TextInputType.text,
+                    controller: bankAccountController,
+                  ),
+                  SizedBox(height: 12),
                   AppButton(
                     backgroundButton: primary,
                     onPressed: () async {
@@ -164,6 +172,7 @@ class _PublishScooterState extends State<PublishScooter> {
                         district: districtController.text,
                         price: double.tryParse(priceController.text) ?? 0,
                         image: currentImage,
+                        bankAccount: bankAccountController.text
                       );
                       try{
                         await scooterService.post(request);

@@ -4,7 +4,7 @@ import 'package:movirent/auth/domain/service/profile.service.dart';
 import 'package:movirent/auth/presentation/providers/profile_provider.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
-import 'package:movirent/scooters/presentation/widgets/scooter_details.dart';
+import 'package:movirent/scooters/presentation/screens/scooter_details.dart';
 import 'package:provider/provider.dart';
 
 import '../../../ui/styles/ui_styles.dart';
