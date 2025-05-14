@@ -190,6 +190,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_easy_recaptcha_v2:
+    dependency: "direct main"
+    description:
+      name: flutter_easy_recaptcha_v2
+      sha256: "372d2faab027b166a7d83a872bb7a471d9736a72cf8f1487b96c315d12aa0ad2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0"
   flutter_inappwebview:
     dependency: transitive
     description:

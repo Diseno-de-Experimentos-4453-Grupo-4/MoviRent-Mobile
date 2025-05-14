@@ -97,9 +97,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 final profileService = ProfileService();
                 final fireAuthService = FireAuthService();
+                await fireAuthService.signUp(request);
                  try{
                    final success = await profileService.post(request);
-                   await fireAuthService.signUp(request);
                    if (success){
                      await showDialog(
                        context: context,
