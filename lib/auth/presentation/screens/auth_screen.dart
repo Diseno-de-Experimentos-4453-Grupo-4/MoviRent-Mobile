@@ -25,6 +25,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final fireAuthService = FireAuthService();
 
   bool isCaptchaComplete = false;
+  bool termsChecked = false;
 
   void dispose() {
     passwordController.dispose();
@@ -78,6 +79,20 @@ class _AuthScreenState extends State<AuthScreen> {
                       try {
                         final request = SignInDTO(emailController.text, passwordController.text);
                         final token = await fireAuthService.signIn(request);
+                        if (!termsChecked){
+                          await showDialog(
+                            context: context,
+                            builder: (context) => CustomAlert(
+                              title: "Acepte nuestros terminos y condiciones",
+                              content: "Acepte nuestros terminos y condiciones antes de iniciar sesion.",
+                              isSuccess: false,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                          return;
+                        }
                         if (token == "Pending"){
                           await showDialog(
                             context: context,
@@ -138,6 +153,29 @@ class _AuthScreenState extends State<AuthScreen> {
                     );
                   },
                   label: "Recuperar contraseña"
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Checkbox(
+                      value: termsChecked,
+                      onChanged: (checked){
+                        setState(() {
+                          termsChecked = checked!;
+                        });
+                      }
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Text(
+                        "Al iniciar sesión aceptas nuestros terminos y condiciones",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: textSmall
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(height: 20),
               AppButton(

@@ -330,7 +330,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                             ),
                             const SizedBox(height: 20),
                             Image.network(currentBaucher.isNotEmpty ? currentBaucher
-                                : "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg"),
+                                : "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available_87543-11093.jpg", width: 100,),
                             const SizedBox(height: 20),
                             AppButton(
                                 backgroundButton:warn,
