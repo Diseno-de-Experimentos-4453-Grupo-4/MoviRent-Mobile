@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/ui/styles/ui_styles.dart';
@@ -8,16 +7,25 @@ class CustomAlert extends StatelessWidget {
   final String content;
   final bool isSuccess;
   final VoidCallback onPressed;
-  const CustomAlert({super.key, required this.title, required this.content, required this.isSuccess,  required this.onPressed});
+
+  const CustomAlert({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.isSuccess,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: background,
-      content: SizedBox(
-        height: 400,
+      content: ConstrainedBox(
+        constraints: const BoxConstraints(
+          maxHeight: 500, // Altura máxima del modal
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               title,
@@ -28,34 +36,30 @@ class CustomAlert extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Flexible(
-              flex: 1,
-              child: Text(
+            Expanded(
+              child: SingleChildScrollView(
+                child: Text(
                   content,
-                style: TextStyle(
-                  color: secondary,
-                  fontSize: textMid - 5
+                  style: TextStyle(
+                    color: secondary,
+                    fontSize: textMid - 5,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 20),
-            isSuccess ?
             Image.asset(
-                "assets/success_icon.jpeg",
+              isSuccess ? "assets/success_icon.jpeg" : "assets/error_icon.png",
               width: 70,
-            ) :
-            Image.asset(
-                "assets/error_icon.png",
-              width: 70,
-            )
+            ),
           ],
         ),
       ),
       actions: [
         AppButton(
-            backgroundButton: isSuccess ? primary : danger,
-            onPressed: onPressed,
-            label: "Aceptar"
+          backgroundButton: isSuccess ? primary : danger,
+          onPressed: onPressed,
+          label: "Aceptar",
         ),
       ],
     );

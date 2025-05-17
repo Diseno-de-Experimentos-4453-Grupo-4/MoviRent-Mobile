@@ -24,9 +24,10 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController emailController = TextEditingController();
   final fireAuthService = FireAuthService();
 
-  bool isCaptchaComplete = false;
+  bool isEmailVerified = false;
   bool termsChecked = false;
 
+  @override
   void dispose() {
     passwordController.dispose();
     emailController.dispose();
@@ -78,7 +79,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   onPressed: () async {
                       try {
                         final request = SignInDTO(emailController.text, passwordController.text);
-                        final token = await fireAuthService.signIn(request);
                         if (!termsChecked){
                           await showDialog(
                             context: context,
@@ -93,6 +93,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           );
                           return;
                         }
+                        final token = await fireAuthService.signIn(request);
                         if (token == "Pending"){
                           await showDialog(
                             context: context,
@@ -168,7 +169,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   Flexible(
                     flex: 1,
                     child: Text(
-                        "Al iniciar sesión aceptas nuestros terminos y condiciones",
+                        "Al iniciar sesión acepta nuestros terminos y condiciones",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: textSmall

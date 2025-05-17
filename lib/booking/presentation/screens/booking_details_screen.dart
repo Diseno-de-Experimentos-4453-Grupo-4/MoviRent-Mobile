@@ -117,6 +117,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
               ),
             ),
             const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                      widget.bookingResponseDTO.statusId == 1 ? "En curso" : "En proceso de aprobación",
+                style: TextStyle(
+                    fontSize: textMid,
+                  color: widget.bookingResponseDTO.statusId == 1 ? primary : danger
+                )
+              ),
+            ),
             if (widget.scooterResponseDTO.profileId ==
                 profileProvider.profile.id && widget.bookingResponseDTO.statusId == 2)
               Padding(

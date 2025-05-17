@@ -30,7 +30,7 @@ class _MyScootersScreenState extends State<MyScootersScreen> {
           future: scooterService.getScootersByProfileId(profileProvider.profile.id!),
           builder: (context, snapshot){
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(color: primary);
+              return Center(child: CircularProgressIndicator(color: primary));
             }
             if (!snapshot.hasData) {
               return Center(

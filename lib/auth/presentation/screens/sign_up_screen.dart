@@ -30,6 +30,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController districtController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool termsChecked = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +73,70 @@ class _SignUpScreenState extends State<SignUpScreen> {
             AppTextField(label: "Distrito", hintText: "Ingrese su distrito", prefixIcon: Icons.flag, controller: districtController,labelColor: secondary),
             const SizedBox(height: 20),
             AppTextField(label: "Contraseña", hintText: "Ingrese su contraseña", prefixIcon: Icons.lock, obscureText: true, controller: passwordController,labelColor: secondary),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Checkbox(
+                    value: termsChecked,
+                  onChanged: (checked) async {
+                    if (!termsChecked) {
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomAlert(
+                            title: "Acuerdos de servicio",
+                            content: '''
+Obligaciones del Usuario
+
+Responsabilidad sobre el Estado del Scooter:
+El usuario es responsable de inspeccionar el estado del scooter antes de iniciar su uso. Cualquier daño o defecto deberá ser reportado a través de la aplicación para evitar cargos por daños preexistentes.
+
+Cumplimiento de las Leyes de Tránsito:
+El usuario se compromete a utilizar el scooter de manera responsable y a cumplir con todas las normativas de tránsito locales durante su uso.
+
+Derechos del Usuario
+
+Derecho a la Privacidad y Protección de Datos:
+El usuario tiene derecho a que su información personal sea tratada conforme a nuestra política de privacidad, la cual cumple con las regulaciones vigentes en materia de protección de datos.
+
+Acceso al Historial de Pagos:
+El usuario puede acceder en todo momento a su historial de pagos y transacciones dentro de la plataforma.
+
+Restricciones del Usuario
+
+Uso No Comercial:
+El uso de los scooters está restringido únicamente para fines personales y de transporte. Está prohibido utilizarlos para servicios comerciales o de mensajería sin la aprobación explícita de Movirent.
+
+Prohibición de Subalquiler:
+El usuario no está autorizado a subarrendar el scooter a terceros mientras esté en uso bajo su cuenta.
+''',
+                            isSuccess: true,
+                            onPressed:(){
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
+                      );
+                    }
+
+                    setState(() {
+                      termsChecked = checked!;
+                    });
+                  },
+
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Text(
+                    "Al registrarse acepta nuestros terminos y condiciones",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: textSmall
+                    ),
+                  ),
+                )
+              ],
+            ),
             const SizedBox(height: 30),
             AppButton(
               backgroundButton: primary,
@@ -97,6 +164,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 final profileService = ProfileService();
                 final fireAuthService = FireAuthService();
+                if (!termsChecked){
+                  await showDialog(
+                    context: context,
+                    builder: (context) => CustomAlert(
+                      title: "Acepte nuestros terminos y condiciones",
+                      content: "Acepte nuestros terminos y condiciones antes de iniciar sesion.",
+                      isSuccess: false,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                  return;
+                }
                 await fireAuthService.signUp(request);
                  try{
                    final success = await profileService.post(request);
