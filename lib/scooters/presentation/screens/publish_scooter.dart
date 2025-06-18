@@ -185,7 +185,7 @@ class _PublishScooterState extends State<PublishScooter> {
                                   isSuccess: true,
                                   onPressed: (){
                                     Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                                  }
+                                  }, height: 200,
                               );
                             }
                         );
@@ -199,7 +199,7 @@ class _PublishScooterState extends State<PublishScooter> {
                                   isSuccess: false,
                                   onPressed: (){
                                     Navigator.pop(context);
-                                  }
+                                  }, height: 200,
                               );
                             }
                         );

@@ -88,7 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               isSuccess: false,
                               onPressed: () {
                                 Navigator.pop(context);
-                              },
+                              }, height: 300,
                             ),
                           );
                           return;
@@ -103,7 +103,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               isSuccess: true,
                               onPressed: () {
                                 Navigator.pop(context);
-                              },
+                              }, height: 300,
                             ),
                           );
                         } else{
@@ -118,7 +118,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               onPressed: () {
                                 Navigator.pushReplacement(
                                     context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                              },
+                              }, height: 300,
                             ),
                           );
                         }
@@ -129,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                             title: "Ocurrió un error en el inicio de sesión",
                             content: "Las credenciales proporcionadas no son válidas.",
                             isSuccess: false,
-                            onPressed: () => Navigator.of(context).pop(),
+                            onPressed: () => Navigator.of(context).pop(), height: 200,
                           ),
                         );
                       }
@@ -149,7 +149,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         isSuccess: true,
                         onPressed: () {
                           Navigator.pop(context);
-                        },
+                        }, height: 300,
                       ),
                     );
                   },

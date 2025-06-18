@@ -113,7 +113,7 @@ El usuario no estÃ¡ autorizado a subarrendar el scooter a terceros mientras estÃ
                             isSuccess: true,
                             onPressed:(){
                               Navigator.pop(context);
-                            },
+                            }, height: 500,
                           );
                         },
                       );
@@ -173,13 +173,13 @@ El usuario no estÃ¡ autorizado a subarrendar el scooter a terceros mientras estÃ
                       isSuccess: false,
                       onPressed: () {
                         Navigator.pop(context);
-                      },
+                      }, height: 300,
                     ),
                   );
                   return;
                 }
-                await fireAuthService.signUp(request);
                  try{
+                   await fireAuthService.signUp(request);
                    final success = await profileService.post(request);
                    if (success){
                      await showDialog(
@@ -190,18 +190,19 @@ El usuario no estÃ¡ autorizado a subarrendar el scooter a terceros mientras estÃ
                          isSuccess: true,
                          onPressed: () {
                            Navigator.push(context, MaterialPageRoute(builder: (_) => AuthScreen()));
-                         },
+                         }, height: 200,
                        ),
                      );
                    }
-                 } catch(_){
+                 } catch(e){
+                  print(e);
                    await showDialog(
                      context: context,
                      builder: (context) => CustomAlert(
                        title: "OcurriÃ³ un error en el registro",
                        content: "El usuario en cuestiÃ³n ya existe",
                        isSuccess: false,
-                       onPressed: () => Navigator.of(context).pop(),
+                       onPressed: () => Navigator.of(context).pop(), height: 200,
                      ),
                    );
                  }

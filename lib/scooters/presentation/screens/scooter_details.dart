@@ -9,6 +9,7 @@ import 'package:movirent/scooters/domain/dto/scooter_request.dto.dart';
 import 'package:movirent/scooters/domain/dto/scooter_response.dto.dart';
 import 'package:movirent/scooters/domain/service/scooter.service.dart';
 import 'package:movirent/reviews/presentation/screens/scooter_reviews_screen.dart';
+import 'package:movirent/scooters/presentation/screens/my_scooters_screen.dart';
 import 'package:movirent/shared/infrastructre/service/imgur.service.dart';
 import 'package:movirent/shared/presentation/widgets/app_button.dart';
 import 'package:movirent/shared/presentation/widgets/app_text_field.dart';
@@ -278,6 +279,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                       setState(() {
                         editMode = !editMode;
                       });
+                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (_) => MyScootersScreen()));
                     } catch (e) {
                       throw Exception("An error has occurred while trying to update scooter $e");
                     }
@@ -366,7 +368,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                                               isSuccess: true,
                                               onPressed: () {
                                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                                              },
+                                              }, height: 200,
                                             );
                                           }
                                       );
@@ -380,7 +382,7 @@ class _ScooterDetailsState extends State<ScooterDetails> {
                                               isSuccess: false,
                                               onPressed: () {
                                                 Navigator.of(context).pop(true);
-                                              },
+                                              }, height: 200,
                                             );
                                           }
                                       );

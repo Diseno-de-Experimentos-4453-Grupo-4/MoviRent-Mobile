@@ -76,6 +76,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
             context: context,
             builder: (context){
               return CustomAlert(
+                height: 200,
                   title: "Reporte creado con éxito",
                   content: "El reporte se creo exitosamente",
                   isSuccess: true,
@@ -90,6 +91,7 @@ class _AddReportScreenState extends State<AddReportScreen> {
             context: context,
             builder: (context){
               return CustomAlert(
+                height: 200,
                   title: "Ocurrio un error al crear el reporte",
                   content: "Por favor, intentelo más tarde",
                   isSuccess: false,

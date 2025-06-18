@@ -188,7 +188,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                                 isSuccess: true,
                                                 onPressed: () {
                                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-                                                },
+                                                }, height: 200,
                                               );
                                             }
                                         );
@@ -202,7 +202,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen> {
                                                 isSuccess: false,
                                                 onPressed: () {
                                                   Navigator.of(context).pop(true);
-                                                },
+                                                }, height: 200,
                                               );
                                             }
                                         );

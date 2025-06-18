@@ -190,7 +190,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               isSuccess: true,
                               onPressed: (){
                                 Navigator.pop(context);
-                              }
+                              }, height: 200,
                           );
                         }
                     );
@@ -204,7 +204,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               isSuccess: false,
                               onPressed: (){
                                 Navigator.pop(context);
-                              }
+                              }, height: 200,
                           );
                         }
                     );

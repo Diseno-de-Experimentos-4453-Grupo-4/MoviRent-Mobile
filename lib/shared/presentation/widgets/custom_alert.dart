@@ -7,13 +7,14 @@ class CustomAlert extends StatelessWidget {
   final String content;
   final bool isSuccess;
   final VoidCallback onPressed;
+  final double height;
 
   const CustomAlert({
     super.key,
     required this.title,
     required this.content,
     required this.isSuccess,
-    required this.onPressed,
+    required this.onPressed, required this.height,
   });
 
   @override
@@ -21,8 +22,8 @@ class CustomAlert extends StatelessWidget {
     return AlertDialog(
       backgroundColor: background,
       content: ConstrainedBox(
-        constraints: const BoxConstraints(
-          maxHeight: 500, // Altura máxima del modal
+        constraints:  BoxConstraints(
+          maxHeight: height,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

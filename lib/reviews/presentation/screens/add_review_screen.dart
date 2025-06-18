@@ -90,6 +90,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             context: context,
             builder: (context){
               return CustomAlert(
+                height: 200,
                   title: "Reseña creada con éxito",
                   content: "La reseña se creo exitosamente",
                   isSuccess: true,
@@ -104,6 +105,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             context: context,
             builder: (context){
               return CustomAlert(
+                height: 200,
                   title: "Ocurrio un error al crear la reseña",
                   content: "Por favor, intentelo más tarde",
                   isSuccess: false,

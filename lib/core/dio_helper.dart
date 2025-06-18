@@ -44,10 +44,12 @@ abstract class DioHelper<TResponse,TRequest> {
    }
 
    Future<bool> post(TRequest data) async{
-     await dio.post(
+     print("Hello");
+     final response = await dio.post(
          Constant.dev.environment + resourcePath,
        data: toJson(data)
      );
+     print(response);
      return true;
    }
 
