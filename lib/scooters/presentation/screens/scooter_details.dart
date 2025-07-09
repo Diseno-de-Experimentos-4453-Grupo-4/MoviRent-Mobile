@@ -138,6 +138,25 @@ class _ScooterDetailsState extends State<ScooterDetails> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
+              child:  Row(
+                children: [
+                  Text(
+                    "Calificación del dueño:",
+                    style: TextStyle(fontSize: textMid),
+                  ),
+                  Row(
+                    children: List.generate(5, (i) => Icon(
+                      i < (widget.scooterResponseDTO.ownerScore ?? 0)
+                          ? Icons.star
+                          : Icons.star_border,
+                      color: Colors.amber,
+                    )),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: editMode
                   ? AppTextField(
                 controller: brandController,
